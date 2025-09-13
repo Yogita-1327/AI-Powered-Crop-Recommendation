@@ -1,70 +1,111 @@
-import pandas as pd
 import streamlit as st
-
+import pandas as pd
 st.set_page_config(page_title="AI Powered Crop Recommendation System and Market Advisory", page_icon="🌱")
 
-# Load dataset
-market_data = pd.read_csv("data/market_prices.csv")
+# ---------------- Load Local CSS ----------------
+def local_css(file_name):
+    """Load a local CSS file into Streamlit."""
+    try:
+        with open(file_name) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning("⚠️ CSS file not found. Using default styling.")
 
-# 🌐 Language selector
-lang = st.selectbox("🌐 Select Language / भाषा चुनें", ["English", "हिन्दी"])
+# Apply custom CSS (optional)
+local_css("bpp_style.css")
 
-# 🌐 Translation dictionary
+# ---------------- Chatbase Script ----------------
+chatbase_script = """
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="stGSNcflAgIWun5ntpbM5";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
+"""
+
+
+st.components.v1.html(chatbase_script, height=700, width=900)
+
+
+# ---------------- Translations ----------------
 translations = {
     "English": {
         "title": "🌱 AGRIMIND AI-POWERED CROP & MARKET ADVISORY By GreenMind",
-        "desc": "Enter your soil and weather values to get the best crop recommendation.",
-        "inputs": {
-            "N": "Nitrogen (N)",
-            "P": "Phosphorus (P)",
-            "K": "Potassium (K)",
-            "pH": "Soil pH",
-            "rainfall": "Rainfall (mm)",
-            "temperature": "Temperature (°C)",
-            "humidity": "Humidity (%)"
-        },
+        "nitrogen": "Enter Nitrogen value",
+        "phosphorus": "Enter Phosphorus value",
+        "potassium": "Enter Potassium value",
+        "ph": "Enter pH value",
+        "rainfall": "Enter Rainfall (mm)",
+        "temperature": "Enter Temperature (°C)",
+        "humidity": "Enter Humidity (%)",
         "button": "🔍 Recommend Crop",
-        "success": "✅ Recommended Crop",
-        "error": "⚠️ Soil type not found in dataset. Please type correctly.",
-        "market": "💰 Market Price"
+        "success": "Recommended Crop",
+        "market": "Market Price",
     },
-    "हिन्दी": {
-        "title": "🌱 एग्रीमाइंड एआई-आधारित फसल और बाज़ार सलाह - ग्रीनमाइंड द्वारा",
-        "desc": "अपनी मिट्टी और मौसम का मान दर्ज करें और सर्वश्रेष्ठ फसल की सिफारिश प्राप्त करें।",
-        "inputs": {
-            "N": "नाइट्रोजन (N)",
-            "P": "फास्फोरस (P)",
-            "K": "पोटैशियम (K)",
-            "pH": "मिट्टी का pH",
-            "rainfall": "वर्षा (मिमी)",
-            "temperature": "तापमान (°C)",
-            "humidity": "आर्द्रता (%)"
-        },
-        "button": "🔍 फसल की सिफारिश करें",
-        "success": "✅ अनुशंसित फसल",
-        "error": "⚠️ मिट्टी का प्रकार डेटा में नहीं मिला। कृपया सही लिखें।",
-        "market": "💰 बाज़ार मूल्य"
-    }
+    "Hindi": {
+        "title": "🌱 एआई-संचालित फसल सिफारिश प्रणाली",
+        "nitrogen": "नाइट्रोजन का मान दर्ज करें",
+        "phosphorus": "फास्फोरस का मान दर्ज करें",
+        "potassium": "पोटेशियम का मान दर्ज करें",
+        "ph": "pH मान दर्ज करें",
+        "rainfall": "वर्षा (मिमी) दर्ज करें",
+        "temperature": "तापमान (°C) दर्ज करें",
+        "humidity": "आर्द्रता (%) दर्ज करें",
+        "button": "🔍 फसल सुझाएं",
+        "success": "अनुशंसित फसल",
+        "market": "बाजार मूल्य",
+    },
 }
 
-# 🏷️ Title & description
+# ---------------- Load Market Data ----------------
+try:
+    market_data = pd.read_csv("data/market_prices.csv")
+except FileNotFoundError:
+    market_data = pd.DataFrame({"crop": [], "price_per_quintal": []})
+    st.warning("⚠️ Market price dataset not found. Showing default results.")
+
+# ---------------- Crop Recommendation Function ----------------
+def recommend_crop(N, P, K, pH, rainfall, temperature, humidity, market_data):
+    if 6 <= pH <= 7 and rainfall > 100 and humidity > 70:
+        crop = "Rice"
+    elif 5.5 <= pH <= 6.5 and N < 100 and temperature < 25:
+        crop = "Wheat"
+    else:
+        crop = "Maize"
+
+    price_row = market_data[market_data["crop"].str.lower() == crop.lower()]
+    if not price_row.empty:
+        price = price_row["price_per_quintal"].values[0]
+    else:
+        price = "N/A"
+
+    return {"recommended_crop": crop, "market_price": price}
+
+# ---------------- Streamlit UI ----------------
+lang = st.sidebar.radio("🌐 Select Language / भाषा चुनें", ["English", "Hindi"])
 st.title(translations[lang]["title"])
-st.write(translations[lang]["desc"])
 
-# 📥 User Inputs
-N = st.number_input(translations[lang]["inputs"]["N"], min_value=0, max_value=500, value=50)
-P = st.number_input(translations[lang]["inputs"]["P"], min_value=0, max_value=500, value=30)
-K = st.number_input(translations[lang]["inputs"]["K"], min_value=0, max_value=500, value=40)
-pH = st.number_input(translations[lang]["inputs"]["pH"], min_value=0.0, max_value=14.0, value=6.5)
-rainfall = st.number_input(translations[lang]["inputs"]["rainfall"], min_value=0.0, max_value=500.0, value=120.0)
-temperature = st.number_input(translations[lang]["inputs"]["temperature"], min_value=8, max_value=43, value=25)
-humidity = st.number_input(translations[lang]["inputs"]["humidity"], min_value=14, max_value=100, value=80)
+N = st.number_input(translations[lang]["nitrogen"], min_value=0, max_value=140, value=50)
+P = st.number_input(translations[lang]["phosphorus"], min_value=0, max_value=140, value=50)
+K = st.number_input(translations[lang]["potassium"], min_value=0, max_value=140, value=50)
+pH = st.number_input(translations[lang]["ph"], min_value=0.0, max_value=14.0, value=6.5)
+rainfall = st.number_input(translations[lang]["rainfall"], min_value=0, max_value=500, value=100)
+temperature = st.number_input(translations[lang]["temperature"], min_value=-10, max_value=50, value=25)
+humidity = st.number_input(translations[lang]["humidity"], min_value=0, max_value=100, value=70)
 
-# 🌍 External link (bottom-right corner)
+if st.button(translations[lang]["button"]):
+    result = recommend_crop(N, P, K, pH, rainfall, temperature, humidity, market_data)
+    st.success(
+        f"{translations[lang]['success']}: {result['recommended_crop']} | "
+        f"{translations[lang]['market']}: ₹{result['market_price']}/quintal"
+    )
+
+# ---------------- Floating External Link ----------------
 st.markdown(
     """
-    <div style="position: fixed; bottom: 10px; right: 10px; background-color: #f0f0f0; padding: 8px; border-radius: 5px;">
-        <a href="https://ai-powered-leaf-stress-detection-for-sustainable-farming-ngsvn.streamlit.app/" target="_blank" style="text-decoration: none; color: blue; font-weight: bold;">
+    <div style="position: fixed; bottom: 60px; right: 10px; background-color: #f0f0f0;
+                padding: 8px; border-radius: 5px;">
+        <a href="https://ai-powered-leaf-stress-detection-for-sustainable-farming-ngsvn.streamlit.app/"
+           target="_blank"
+           style="text-decoration: none; color: blue; font-weight: bold;">
             🌱 Check Leaf Health
         </a>
     </div>
@@ -72,30 +113,5 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# 🔮 Crop recommendation logic
-def recommend_crop(N, P, K, pH, rainfall, market_data):
-    if 6 <= pH <= 7 and rainfall > 100:
-        crop = "Rice"
-    elif 5.5 <= pH <= 6.5 and N < 100:
-        crop = "Wheat"
-    else:
-        crop = "Maize"
-    
-    # Find market price
-    price_row = market_data[market_data["crop"] == crop]
-    if not price_row.empty:
-        price = price_row["price_per_quintal"].values[0]
-    else:
-        price = "N/A"
-    
-    return {
-        "recommended_crop": crop,
-        "market_price": price
-    }
-
-# 🔘 Button action
-if st.button(translations[lang]["button"]):
-    result = recommend_crop(N, P, K, pH, rainfall, market_data)
-    st.success(
-        f"{translations[lang]['success']}: {result['recommended_crop']} | {translations[lang]['market']}: ₹{result['market_price']}/quintal"
-    )
+# ---------------- Inject Chatbase Chatbot (floating bottom-right) ----------------
+st.markdown(chatbase_script, unsafe_allow_html=True)
