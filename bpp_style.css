@@ -1,0 +1,66 @@
+/* === AGRIMIND Theme === */
+body {
+    background-color: #f4fff4; /* light green background */
+    font-family: "Segoe UI", sans-serif;
+}
+
+h1, h2, h3 {
+    color: #2e7d32; /* dark green headings */
+    text-align: center;
+    font-weight: bold;
+}
+
+.stButton>button {
+    background-color: #4CAF50;  /* green button */
+    color: white;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.stButton>button:hover {
+    background-color: #388e3c; /* darker green hover */
+    color: #fff;
+}
+
+.stTextInput>div>div>input {
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.stNumberInput>div>div>input {
+    border: 2px solid #81c784;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* Success box */
+.stSuccess {
+    background-color: #e8f5e9;
+    border-left: 5px solid #2e7d32;
+    color: #1b5e20;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Error box */
+.stError {
+    background-color: #ffebee;
+    border-left: 5px solid #c62828;
+    color: #b71c1c;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Footer link */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: #c8e6c9;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
