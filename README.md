@@ -12,7 +12,7 @@ Built with **Streamlit** for an easy-to-use web and mobile-friendly interface.
 - 📊 **Soil & Weather Input** → Farmers can enter Nitrogen, Phosphorus, Potassium, pH, rainfall, temperature, and humidity values.
 - 🌱 **Crop Recommendation** → Suggests the best crop for given soil and climate conditions.
 - 💰 **Market Advisory** → Provides approximate market prices for the recommended crop.
-- 🌐 **Multilingual Support** → English + Hindi (extendable to more languages).
+- 🌐 **Multilingual Support** → English + Hindi (extendable to more languages in future).
 - 📱 **Mobile Ready** → Works on phones; can be converted into an APK for Android.
 - 🎨 **Custom Styling** → Agriculture-themed UI with CSS support.
 
