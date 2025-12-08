@@ -19,3 +19,35 @@ Built with **Streamlit** for an easy-to-use web and mobile-friendly interface.
 ---
 
 ## 🏗️ Project Structure
+AI-Crop-Recommendation/
+│
+├── 📂 data/
+│   ├── crop_data.csv            # Dataset used for training the model
+│   ├── market_prices.csv        # Approx market price dataset
+│   └── soil_samples.csv         # Sample soil data (optional)
+│
+├── 📂 models/
+│   ├── crop_model.pkl           # Trained ML model for crop prediction
+│   └── scaler.pkl               # StandardScaler / preprocessing model
+│
+├── 📂 app/
+│   ├── main.py                  # Streamlit main app file
+│   ├── utils.py                 # Helper functions for prediction & advisory
+│   ├── ui_components.py         # Reusable UI widgets, cards, styles
+│   ├── language_support.py      # Multilingual translations (English/Hindi)
+│   └── market_advisory.py       # Logic for suggesting market price
+│
+├── 📂 assets/
+│   ├── styles.css               # Custom CSS for UI theming
+│   ├── banner.png               # App banner / hero image
+│   └── icons/                   # Icons for crops, weather, UI elements
+│
+├── 📂 deployment/
+│   ├── requirements.txt         # Python dependencies
+│   ├── Procfile                 # For deployment on Streamlit Cloud/Heroku
+│   └── Dockerfile               # (Optional) Containerization support
+│
+├── README.md                    # Project documentation  
+├── LICENSE                      # Project license (MIT/GPL etc.)
+└── .gitignore                   # Ignore unnecessary files in GitHub
+
