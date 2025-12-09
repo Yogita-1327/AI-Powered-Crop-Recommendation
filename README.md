@@ -51,3 +51,8 @@ AI-Crop-Recommendation/
 ├── LICENSE                      # Project license (MIT/GPL etc.)
 └── .gitignore                   # Ignore unnecessary files in GitHub
 
+🌦️ Real-Time Integrations
+
+Live Weather API Integration (OpenWeather / Weatherbit) → Auto-fetch temperature, humidity, rainfall instead of manual input.
+
+Market Price API Integration → Can be extended to fetch real mandi prices from government sources (Agmarknet API).
