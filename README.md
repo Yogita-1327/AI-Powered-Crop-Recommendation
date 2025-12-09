@@ -56,3 +56,11 @@ AI-Crop-Recommendation/
 Live Weather API Integration (OpenWeather / Weatherbit) → Auto-fetch temperature, humidity, rainfall instead of manual input.
 
 Market Price API Integration → Can be extended to fetch real mandi prices from government sources (Agmarknet API).
+
+🧩 Smart Farming Add-Ons
+
+Fertilizer Recommendation System → Suggests nutrient requirements tailored to the recommended crop.
+
+Pest & Disease Alert Module (future-ready) → Placeholder for integrating image-based detection using CNNs.
+
+Water Requirement Calculator → Shows weekly irrigation needs for the suggested crop.
