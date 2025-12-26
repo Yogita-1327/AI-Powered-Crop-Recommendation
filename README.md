@@ -21,6 +21,7 @@ https://ai-powered-crop-recommendation-yogita-1327.streamlit.app)
 ---
 
 ## 🏗️ Project Structure
+
 AI-Crop-Recommendation/
 │
 ├── 📂 data/
