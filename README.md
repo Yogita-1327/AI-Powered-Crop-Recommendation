@@ -10,6 +10,7 @@ https://ai-powered-crop-recommendation-yogita-1327.streamlit.app)
 ---
 
 ## ✨ Features
+
 - 📊 **Soil & Weather Input** → Farmers can enter Nitrogen, Phosphorus, Potassium, pH, rainfall, temperature, and humidity values.
 - 🌱 **Crop Recommendation** → Suggests the best crop for given soil and climate conditions.
 - 💰 **Market Advisory** → Provides approximate market prices for the recommended crop.
