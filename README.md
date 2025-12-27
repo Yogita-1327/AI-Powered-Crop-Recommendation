@@ -1,6 +1,5 @@
 # 🌱 AI-Powered Crop Recommendation System and Market Advisory
 
-
 An AI-driven decision support system that recommends the most suitable crops for farmers based on soil health, weather conditions, and market data.  
 Built with **Streamlit** for an easy-to-use web and mobile-friendly interface.  
 
