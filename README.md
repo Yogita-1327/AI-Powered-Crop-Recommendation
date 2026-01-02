@@ -8,6 +8,7 @@ https://ai-powered-crop-recommendation-yogita-1327.streamlit.app)
 
 ---
 
+
 ## ✨ Features
 
 - 📊 **Soil & Weather Input** → Farmers can enter Nitrogen, Phosphorus, Potassium, pH, rainfall, temperature, and humidity values.
